@@ -115,7 +115,7 @@ class Hospital:
 
     @staticmethod
     def updateWithPosition(position):
-        if position == []:
+        if len(position) == 0:
             return 0
         else:
             assert len(position) == 2
@@ -130,7 +130,7 @@ class Hospital:
     
     @staticmethod
     def updateWithObjects(objects, position):
-        if objects != []:
+        if len(objects) > 0:
             position = tuple(position)
             for obj in objects:
                 [category, name] = obj.split(SEPARATOR, 1)
@@ -171,6 +171,18 @@ class Hospital:
         else:
             return "Não tenho informação suficiente para determinar"
 
+    @staticmethod
+    def getDistanceToNearestDoctor():
+        doctors = []
+        for (room, things) in Hospital._floor.nodes(data=True):
+            if OBJ_DOCTOR in things:
+                doctors += list(map(lambda t: (room, t[0], t[1]), things[OBJ_DOCTOR]))
+        if len(doctors) > 0:
+            doctors = list(map(lambda d: (d[0], Utils.distance(d[1], (pos_x, pos_y)), d[2]), doctors))
+            doctors.sort(key = lambda d: d[1])
+            return "Médico {0} na sala {1} a uma distância de {2:.3f}.".format(doctors[0][2], doctors[0][0], doctors[0][1])
+        else:
+            return "Ainda não encontrei médicos"
 
 
     @staticmethod
@@ -187,6 +199,10 @@ class Utils:
     @staticmethod
     def swap(x, y):
         return (y, x)
+    
+    @staticmethod
+    def distance(a, b):
+        return ((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2) ** 0.5
 
 
 
@@ -205,7 +221,6 @@ def work(posicao, bateria, objetos):
     global pos_y
     
     #copia as posicoes para o posicao1 para podermos utilizar nas questoes
-    #posicao1.extend(posicao)
     pos_x = posicao[0]
     pos_y = posicao[1]
 
@@ -229,14 +244,14 @@ def resp2():
 
 def resp3():
     # Qual o caminho para a sala de enfermeiros mais próxima?
+    # Euclidiana, por grafos ou por A*?
     print("Pergunta 3")
     pass
 
 
 def resp4():
     # Qual a distância até ao médico mais próximo?
-    print("Pergunta 4")
-    pass
+    print("Resposta: {0}".format(Hospital.getDistanceToNearestDoctor()))
 
 
 def resp5():
