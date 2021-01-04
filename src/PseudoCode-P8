@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------------------------------------
+                                LINGUAGEM NATURAL REFERENTE À PERGUNTA 8
+---------------------------------------------------------------------------------------------------------
+
+Este algoritmo irá calcular a probabilidade do acontecimento seguinte:
+"Se encontrares um enfermeiro numa divisão, qual é a probabilidade de estar lá um doente?"
+
+Traduzindo o problema para Linguagem probabilística:
+
+
+Este evento trata-se de uma previsão, e a mesma pode ser calculada de várias formas.
+Os Métodos de aprendizagem estatística disponíveis são:
+-> Aprendizagem Bayesiana
+-> Máximo à posteriori: MAP
+-> Máxima verosimilhança
+-> Naive Bayes
+-> k-vizinhos mais próximos
+
+O método mais adequado para calcular esta probabilidade, na nossa opinião, é o Naive Bayes.
+https://www.codespeedy.com/naive-bayes-algorithm-in-python/
+
+---------------------------------------------------------------------------------------------------------
+                                PSEUDOCÓDIGO REFERENTE À PERGUNTA 8
+---------------------------------------------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------------------------------------------
+                                
+---------------------------------------------------------------------------------------------------------

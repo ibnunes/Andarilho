@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------------------------------------
+                                PSEUDOCÓDIGO REFERENTE À PERGUNTA 1
+---------------------------------------------------------------------------------------------------------
+
+Auxiliar Class:
+
+class Things:
+    create empty list of people 
+
+    function add(category, name):
+        if the class doesn't already contain the object (in this case the person object) with the arguments category and name:
+            append the person object in the form of a tuple  (category, name) to the list of people
+
+This function computes the last but one person that has been seen by the robot:
+
+function getLastButOnePerson():
+
+    if the robot has already seen greater or equal to 2 people on the list of people
+        then return the index on the list of the person
+    else
+        return error "Não foram encontradas pelo menos 2 pessoas até ao momento"
+
+---------------------------------------------------------------------------------------------------------
+                                
+---------------------------------------------------------------------------------------------------------

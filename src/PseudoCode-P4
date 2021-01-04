@@ -1,0 +1,40 @@
+---------------------------------------------------------------------------------------------------------
+                                PSEUDOCÓDIGO REFERENTE À PERGUNTA 4
+---------------------------------------------------------------------------------------------------------
+
+Auxiliar Classes:
+
+class Things:
+    create empty list of people 
+
+    function add(category, name):
+        if the class doesn't already contain the object (in this case the person object) with the arguments category and name:
+            append the person object in the form of a tuple  (category, name) to the list of people
+
+class Hospital:
+    store coordinates of the limits of the rooms
+
+    store the current room that the robot is in
+
+    function that creates a graph with nodes that are the rooms and that have attributes that are the objects in that room
+
+    get through the graph and store the person objects found in a list of people with the add function in the class Things
+
+This function computes the distance to the nearest doctor:
+
+function getDistanceToNearestDoctor():
+        create empty list that stores the doctors
+
+        go through the graph that stores the information that the robot already has knowledge of 
+        and if the doctor is already on the list of people map the room and position that he is in to the list along with is name
+
+        if the list of doctors is not empty:
+            compute the euclidian distance between the doctor and the current position of the robot
+            sort the distances in an ascending order
+            return the content of the first index of the list of doctors 
+        else:
+            return error: "Ainda não encontrei médicos"
+
+---------------------------------------------------------------------------------------------------------
+                                
+---------------------------------------------------------------------------------------------------------

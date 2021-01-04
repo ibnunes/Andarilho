@@ -1,0 +1,46 @@
+---------------------------------------------------------------------------------------------------------
+                                PSEUDOCÓDIGO REFERENTE À PERGUNTA 2
+---------------------------------------------------------------------------------------------------------
+
+Auxiliar Classes:
+
+class Things:
+    create empty list of objects 
+
+    function add(category, name):
+        if the class doesn't already contain the object (in this case the furniture object) with the arguments category and name:
+            append the furniture object in the form of a tuple  (category, name) to the list of objects
+
+class Hospital:
+    store coordinates of the limits of the rooms
+
+    store the current room that the robot is in
+
+    function that creates a graph with nodes that are the rooms and that have attributes that are the objects in that room
+
+    get through the graph and store the objects found in a list of things with the add function in the class Things
+
+This function computes the type of room the robot is in:
+
+function getTypeOfRoom(current room):
+        # BedRoom: >= 1 bed
+        # Nurses Room: 0 beds, >= 1 chairs AND >= 1 tables
+        # Waiting Room: > 2 chairs, 0 tables, 0 beds
+        # Corridor: de 1 a 4
+
+    if the room is numbered from 1 to 4:
+        return is corridor
+    
+    create counter that stores the number of objects by category in a certain node (room)
+
+    if the counter of beds is greater or equal to 1:
+        return is bedroom
+    else if the counter of chairs is greater or equal to 1 and the counter of tables is greater or equal to 1:
+        return is nurses room
+    else if the counter of chairs is greater than 2:
+        return is waiting room
+    else:
+        return is unknown 
+---------------------------------------------------------------------------------------------------------
+                                
+---------------------------------------------------------------------------------------------------------

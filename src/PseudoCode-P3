@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------------------------------------
+                                PSEUDOCÓDIGO REFERENTE À PERGUNTA 3
+---------------------------------------------------------------------------------------------------------
+
+Auxiliar Classes:
+
+class Hospital:
+    store coordinates of the limits of the rooms
+
+    store the current room that the robot is in
+
+    function that creates a graph with nodes that are the rooms and that have attributes that are the objects in that room
+
+This function computes the distance to the nearest doctor:
+
+function getPathToNearestNurseOffice():
+        create list that stores the nurses rooms that the robot already has been in
+
+        if the list of rooms is not empty:
+            if the robot is in a nurse room:
+                return the room
+            for r in the nurses room list:
+                compute the a* algorithm in the graph created to get the shortest paths to each of the nurses room 
+                and append to a list of results
+            if list of results is empty
+                return Nothing
+            sort the list of results in an ascending order
+            return the path for the nearest nurse room
+        else:
+            return Nothing
+           
+
+---------------------------------------------------------------------------------------------------------
+                                
+---------------------------------------------------------------------------------------------------------
