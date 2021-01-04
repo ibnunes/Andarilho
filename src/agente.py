@@ -328,8 +328,10 @@ class Hospital:
                     result.append((weight, path))
                 except nx.NetworkXNoPath:
                     continue
-            result.sort(key = lambda t: t[0])
             Hospital.removeRobotFromMap()
+            if len(result) == 0:
+                return []
+            result.sort(key = lambda t: t[0])
             return result[0][1]
         else:
             return []
