@@ -5,7 +5,8 @@
 Este algoritmo irá calcular a probabilidade do acontecimento seguinte:
 "Qual a probabilidade de encontrar um livro numa divisão, se já encontraste uma cadeira?"
 
-Sabemos, por interpretação do enunciado do projeto, que a existência de uma cadeira e de uma cama aumentam a probabilidade de existir um livro na mesma divisão.
+Sabemos, por interpretação do enunciado do projeto, que a existência de uma cadeira e de uma cama 
+aumentam a probabilidade de existir um livro na mesma divisão.
 
 Sendo assim, ambas as probabilidades influenciam a probabilidade da existência de um livro.
 É necessário construir uma rede bayesiana para o correto cálculo das probabilidades.
@@ -20,20 +21,16 @@ P(X)   = "Probabilidade de encontrar uma cama numa divisão."
 Queremos, portanto, saber P(L|C).
 Sabemos que P(L|C) = P(L,C) / P(C)
 Precisamos então de obter P(L,C) e P(C).
-Da equação de probabilidade conjunta retira-se: 
 
+Marginalizando:
 1º -> P(C,L)     =  ∑(X ∈ {V,F})     P(L,X,C) = P(L,X,C) + P(L,~X,C)
-2º -> P(C)       =  ∑((X,L) ∈ {V,F}) P(C,X,L) = P(C,X,L) + P(C,~X,L) + P(C,X,~L) + P(C,~X,~L)
-3º -> P(C,X,L)   =  P(L|X,C)   * P(X|C)   * P(C)
-4º -> P(C,~X,L)  =  P(L|~X,C)  * P(~X|C)  * P(C)
-5º -> P(C,X,~L)  =  P(L|X,~C)  * P(X|~C)  * P(~C)
-6º -> P(C,~X,~L) =  P(L|~X,~C) * P(~X|~C) * P(~C)
 
 ---------------------------------------------------------------------------------------------------------
                                 PSEUDOCÓDIGO REFERENTE À PERGUNTA 7
 ---------------------------------------------------------------------------------------------------------
 
 
+
 ---------------------------------------------------------------------------------------------------------
                                 
----------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------- 

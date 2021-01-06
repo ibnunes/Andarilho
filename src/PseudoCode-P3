@@ -9,7 +9,8 @@ class Hospital:
 
     store the current room that the robot is in
 
-    function that creates a graph with nodes that are the rooms and that have attributes that are the objects in that room
+    function that creates a graph with nodes that are the rooms and that have attributes 
+    that are the objects in that room
 
 This function computes the distance to the nearest doctor:
 

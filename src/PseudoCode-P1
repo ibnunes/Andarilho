@@ -8,7 +8,8 @@ class Things:
     create empty list of people 
 
     function add(category, name):
-        if the class doesn't already contain the object (in this case the person object) with the arguments category and name:
+        if the class doesn't already contain the object (in this case the person object) 
+        with the arguments category and name:
             append the person object in the form of a tuple  (category, name) to the list of people
 
 This function computes the last but one person that has been seen by the robot:

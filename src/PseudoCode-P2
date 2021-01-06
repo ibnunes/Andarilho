@@ -8,7 +8,8 @@ class Things:
     create empty list of objects 
 
     function add(category, name):
-        if the class doesn't already contain the object (in this case the furniture object) with the arguments category and name:
+        if the class doesn't already contain the object (in this case the furniture object) 
+        with the arguments category and name:
             append the furniture object in the form of a tuple  (category, name) to the list of objects
 
 class Hospital:
@@ -16,9 +17,11 @@ class Hospital:
 
     store the current room that the robot is in
 
-    function that creates a graph with nodes that are the rooms and that have attributes that are the objects in that room
+    function that creates a graph with nodes that are the rooms and that have attributes 
+    that are the objects in that room
 
-    get through the graph and store the objects found in a list of things with the add function in the class Things
+    get through the graph and store the objects found in a list of things 
+    with the add function in the class Things
 
 This function computes the type of room the robot is in:
 
@@ -35,7 +38,8 @@ function getTypeOfRoom(current room):
 
     if the counter of beds is greater or equal to 1:
         return is bedroom
-    else if the counter of chairs is greater or equal to 1 and the counter of tables is greater or equal to 1:
+    else if the counter of chairs is greater or equal to 1 and the counter of tables 
+    is greater or equal to 1:
         return is nurses room
     else if the counter of chairs is greater than 2:
         return is waiting room

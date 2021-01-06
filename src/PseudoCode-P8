@@ -26,9 +26,12 @@ If _floor (Graph) is defined:
         -> set variable to count the total number of rooms (nodes) in the _floor (graph) (total_rooms)
         -> go trough the graph node by node and return the number of rooms with nurses in them (rooms_with_nurses)
         -> calculate the probability of finding nurses in a room (P(E) = rooms_with_nurses / total_rooms)
-        -> go through the nodes that are stored in the variable (rooms_with_nurses) and create variable to count the rooms with patients in them (rooms_nurses_and_patients)
-        -> calculate the probability of finding nurses and patients in a room (P(E and D) = rooms_nurses_and_patients / total_rooms)
-        -> calculate the probability of finding patients if we already found nurses in a room (P(D|E) = P(D,E)/ P(E))
+        -> go through the nodes that are stored in the variable (rooms_with_nurses) and create variable 
+        to count the rooms with patients in them (rooms_nurses_and_patients)
+        -> calculate the probability of finding nurses and patients in a room 
+        (P(E and D) = rooms_nurses_and_patients / total_rooms)
+        -> calculate the probability of finding patients if we already found nurses in a room 
+        (P(D|E) = P(D,E)/ P(E))
 else:
     ->return "Erro: O grafo não está criado."
 

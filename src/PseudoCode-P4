@@ -26,7 +26,8 @@ function getDistanceToNearestDoctor():
         create empty list that stores the doctors
 
         go through the graph that stores the information that the robot already has knowledge of 
-        and if the doctor is already on the list of people map the room and position that he is in to the list along with is name
+        and if the doctor is already on the list of people map the room and position that 
+        he is in to the list along with is name
 
         if the list of doctors is not empty:
             compute the euclidian distance between the doctor and the current position of the robot
