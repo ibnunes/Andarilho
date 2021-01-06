@@ -5,32 +5,34 @@
 Este algoritmo irá calcular a probabilidade do acontecimento seguinte:
 "Qual a probabilidade de encontrar um livro numa divisão, se já encontraste uma cadeira?"
 
+Sabemos, por interpretação do enunciado do projeto, que a existência de uma cadeira e de uma cama aumentam a probabilidade de existir um livro na mesma divisão.
+
+Sendo assim, ambas as probabilidades influenciam a probabilidade da existência de um livro.
+É necessário construir uma rede bayesiana para o correto cálculo das probabilidades.
+
 Traduzindo o problema para Linguagem probabilística:
 P(L|C) = "Probabilidade de encontrar um livro numa divisão, se já se encontrou uma cadeira."
-P(L) = "Probabilidade de encontrar um livro numa divisão."
-P(C) = "Probabilidade de encontrar uma cadeira numa divisão."
-P(L and C) = "Probabilidade de encontrar um livro e uma cadeira numa divisão."
+P(L)   = "Probabilidade de encontrar um livro numa divisão."
+P(C)   = "Probabilidade de encontrar uma cadeira numa divisão."
+P(L,C) = "Probabilidade de encontrar um livro e uma cadeira numa divisão."
+P(X)   = "Probabilidade de encontrar uma cama numa divisão."
 
-Este evento trata-se de uma probabilidade condicionada, em que a mesma é calculada de acordo com a fórmula:
-P(L|C) = (P(L and C)) / P(C)
+Queremos, portanto, saber P(L|C).
+Sabemos que P(L|C) = P(L,C) / P(C)
+Precisamos então de obter P(L,C) e P(C).
+Da equação de probabilidade conjunta retira-se: 
+
+1º -> P(C,L)     =  ∑(X ∈ {V,F})     P(L,X,C) = P(L,X,C) + P(L,~X,C)
+2º -> P(C)       =  ∑((X,L) ∈ {V,F}) P(C,X,L) = P(C,X,L) + P(C,~X,L) + P(C,X,~L) + P(C,~X,~L)
+3º -> P(C,X,L)   =  P(L|X,C)   * P(X|C)   * P(C)
+4º -> P(C,~X,L)  =  P(L|~X,C)  * P(~X|C)  * P(C)
+5º -> P(C,X,~L)  =  P(L|X,~C)  * P(X|~C)  * P(~C)
+6º -> P(C,~X,~L) =  P(L|~X,~C) * P(~X|~C) * P(~C)
 
 ---------------------------------------------------------------------------------------------------------
                                 PSEUDOCÓDIGO REFERENTE À PERGUNTA 7
 ---------------------------------------------------------------------------------------------------------
 
-If _floor (Graph) is defined:
-    if _floor is null:
-        -> return "O robot ainda não tem conhecimento dos objetos presentes nas divisões do hospital.";
-    else
-        -> set variable to count the total number of rooms (nodes) in the _floor (graph) (cnt_total_rooms)
-        -> go trough the graph node by node and return the rooms that have chairs in them
-        -> access the result to a variable (rooms_with_chairs) and create variable to count the rooms with chairs in them (cnt_rooms_chairs)
-        -> calculate the probability of finding chairs in a room (P(C) = cnt_rooms_chairs / cnt_total_rooms)
-        -> go through the nodes that are stored in the variable (rooms_with_chairs) and create variable to count the rooms with books in them (cnt_rooms_chairs_books)
-        -> calculate the probability of finding chairs and books in a room (P(L and C) = cnt_rooms_chairs_books / cnt_total_rooms)
-        -> calculate the probability of finding books if we already found chair in a room (P(L|C) = P(L and C)/ P(C))
-else:
-    ->return "Erro: O grafo não está criado."
 
 ---------------------------------------------------------------------------------------------------------
                                 

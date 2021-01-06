@@ -7,23 +7,30 @@ Este algoritmo irá calcular a probabilidade do acontecimento seguinte:
 
 Traduzindo o problema para Linguagem probabilística:
 
+P(D|E) = "Probabilidade de encontrar um doente numa divisão, se encontrar um enfermeiro."
+P(D)   = "Probabilidade de encontrar um doente numa divisão."
+P(E)   = "Probabilidade de encontrar uma enfermeiro numa divisão."
+P(D,E) = "Probabilidade de encontrar um doente e um enfermeiro numa divisão."
 
-Este evento trata-se de uma previsão, e a mesma pode ser calculada de várias formas.
-Os Métodos de aprendizagem estatística disponíveis são:
--> Aprendizagem Bayesiana
--> Máximo à posteriori: MAP
--> Máxima verosimilhança
--> Naive Bayes
--> k-vizinhos mais próximos
-
-O método mais adequado para calcular esta probabilidade, na nossa opinião, é o Naive Bayes.
-https://www.codespeedy.com/naive-bayes-algorithm-in-python/
+Este evento trata-se de uma probabilidade condicionada, e a mesma pode ser calculada de acordo com a fórmula:
+P(D|E) = P(D,E) / P(E) 
 
 ---------------------------------------------------------------------------------------------------------
                                 PSEUDOCÓDIGO REFERENTE À PERGUNTA 8
 ---------------------------------------------------------------------------------------------------------
 
-
+If _floor (Graph) is defined:
+    if _floor is null:
+        -> return "O robot ainda não tem conhecimento dos objetos presentes nas divisões do hospital.";
+    else
+        -> set variable to count the total number of rooms (nodes) in the _floor (graph) (total_rooms)
+        -> go trough the graph node by node and return the number of rooms with nurses in them (rooms_with_nurses)
+        -> calculate the probability of finding nurses in a room (P(E) = rooms_with_nurses / total_rooms)
+        -> go through the nodes that are stored in the variable (rooms_with_nurses) and create variable to count the rooms with patients in them (rooms_nurses_and_patients)
+        -> calculate the probability of finding nurses and patients in a room (P(E and D) = rooms_nurses_and_patients / total_rooms)
+        -> calculate the probability of finding patients if we already found nurses in a room (P(D|E) = P(D,E)/ P(E))
+else:
+    ->return "Erro: O grafo não está criado."
 
 ---------------------------------------------------------------------------------------------------------
                                 
