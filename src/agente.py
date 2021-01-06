@@ -126,6 +126,7 @@ class Log:
         Log._flag = mode != 0
 
 
+
 class Things:
     _list_people  = []
     _list_objects = []
@@ -420,7 +421,7 @@ class Hospital:
                         Hospital._floor.nodes[Hospital._currentRoom][category] = [(position, name)]
                         # Log.d("No objects found of type {0}. Added first with name {1}.".format(category, name))
                     Things.add(category, name)
-    
+
 
     @staticmethod
     def roomDescription(room_code):
@@ -517,6 +518,7 @@ class Hospital:
         return Hospital._currentRoom
 
 
+
 class Utils:
     @staticmethod
     def inRange(n, r):
@@ -538,7 +540,23 @@ class Utils:
     @staticmethod
     def timeToStr(t):
         return "{0:3d} segundos e {1:3d} milissegundos".format(int(t), int((t - int(t)) * 1000))
-
+    
+    @staticmethod
+    def pathDescription(path):
+        desc = ""
+        for p in path:
+            try:
+                if p[0] == 'X':
+                    continue
+                elif p[0] == 'R':
+                    desc += "\nEstá na sala {0:2d}.".format(int(p[1:]))
+                elif p[0] == 'D':
+                    desc += "\nVá da sala {0:2d} para a sala {1:2d}.".format(int(p[1:3]), int(p[3:]))
+                else:
+                    raise Exception("I dunno!")
+            except:
+                desc += "\n[Error: \"{0}\" was not understood by the path descriptor]".format(p)
+        return desc if len(desc) > 0 else "Nenhum caminho foi encontrado."
 
 
 def work(posicao, bateria, objetos):
@@ -554,7 +572,6 @@ def work(posicao, bateria, objetos):
     # Log.d("Time: {0}".format(time.time()))
 
     Robot.updateRobot(posicao, bateria)
-
     Hospital.updateWithPosition(Robot.getPosition())
     Hospital.updateWithObjects(objetos, Robot.getPosition())
     # Log.d("Posicao = [{0}, {1}]; Bateria = {2:.2f}; Objetos = {3}; Sala = {4}".format(pos_x, pos_y, bateria, objetos, Hospital.getRoomIndex()))
@@ -576,8 +593,7 @@ def resp2():
 
 def resp3():
     # Qual o caminho para a sala de enfermeiros mais próxima?
-    print("Resposta: {0}".format(Hospital.getPathToNearestNurseOffice()))
-    pass
+    print("Resposta: {0}".format(Utils.pathDescription(Hospital.getPathToNearestNurseOffice())))
 
 
 def resp4():
