@@ -1,0 +1,87 @@
+\chapter{Desenvolvimento e Implementação}
+\label{chap:imp-test}
+
+\section{Introdução}
+\label{chap3:sec:intro}
+Este capítulo explora o percurso realizado aquando do desenvolvimento do projeto descrito neste documento.
+
+\section{Escolhas de Implementação}
+\label{chap3:sec:struct}
+
+Antes da implementação dos algoritmos para satisfazer as respostas às perguntas colocadas, foi necessário definir em conjunto a estrutura de dados utilizada para a manipulação do mundo virtual e dos objetos nele contidos.
+
+Sendo assim, além da escolha do uso de listas para guardar os objetos que o dispositivo robótico ia encontrando, foi utilizada numa primeira abordagem uma matriz $800\times600$, para efeitos de cálculo do caminho até à sala de enfermeiros mais próxima (necessário para a resposta ao enunciado descrito na subseccção \ref{chap3:subsec:perg3}). Esta abordagem trouxe imensos problemas, como se reflete na secção \ref{sec::reflexao:problemas}). Assim, como solução, foi escolhida como substituição deste método uma estruturação dos dados retirados do mundo em dois grafos. Recorreu-se à biblioteca anteriormente referida \emph{NetworkX} \cite{NetworkX} para a criação dos mesmos. A descrição de ambos os grafos apresenta-se de seguida.
+
+\begin{itemize}
+	\item Grafo \_\emph{floor} --- criado para armazenar dados dos objetos e das divisões no mundo;
+	\item Grafo \_\emph{map} --- criado para facilitar o mapeamento do mundo, para efeitos de execução do algoritmo A*;
+\end{itemize}
+
+O grafo mencionado primeiramente pode se constatar na imagem seguinte:
+
+%POR IMAGEM
+\begin{figure}[!htb]
+\centering
+%\includegraphics[width=191pt]{}
+\end{figure}
+
+Analisando a imagem anterior podemos retirar que se trata de um grafo não dirigido, composto por nodos e arestas, sendo que os nodos guardam informações acerca das divisões e como seus atributos constam os objetos contidos nessas mesmas divisões. Os atributos estão definidos como um dicionário, onde a chave do mesmo é a categoria de objeto e o valor é a lista de nomes dos objetos dessa categoria encontrados pelo \emph{robot}.
+
+O segundo grafo apresenta as seguintes informações:
+
+%POR IMAGEM
+\begin{figure}[!htb]
+\centering
+%\includegraphics[width=191pt]{ }
+\end{figure}
+
+
+
+No decorrer de todo o projeto foi utilizado um modo de \emph{debugging} com \emph{logs} para efeitos de maior facilidade na correção de erros no código.
+Em termos de organização do código-fonte do trabalho prático, além da escolha do idioma em inglês, optou-se por se utilizar classes, as quais se enumeram seguidamente:
+
+\begin{enumerate}
+	\item \emph{LinearFunction} --- útil na criação de funções lineares necessárias para a resposta à Pergunta 5 e 6, descritas nas subsecções \ref{chap3:subsec:perg5} e \ref{chap3:subsec:perg6}, respetivamente;
+	\item \emph{Log} --- útil para efeitos de \emph{debugging}, tal como mencionado anteriormente, de forma a identificar mais facilmente possíveis \emph{bugs} ;
+	\item \emph{Things} --- útil para definir algumas das estruturas de dados utilizadas, como as listas de objetos e pessoas, e também como auxílio na resposta à Pergunta 1, descrita na subsecção \ref{chap3:subsec:perg1};
+	\item \emph{Robot} --- útil para gerir as informações acerca da velocidade e bateria e suas relações com o tempo;
+	\item \emph{Hospital} --- principal classe do programa na qual a informação relativa ao piso do hospital é atualizada conforme as informações dadas pelo \emph{robot};
+	\item \emph{Utils} --- criada para armazenar um conjunto de utilitários de funções auxiliares, como por exemplo, para calcular distâncias, como também fazer trocas de variáveis e descrição de texto;
+\end{enumerate}
+
+\section{Detalhes de Implementação}
+\label{chap3:sec:details}
+
+De seguida nas diferentes subsecções são enumerados os detalhes de implementação para cada pergunta proposta no enunciado do projeto prático, através da explicação do algoritmo e apresentação do código correspondente.
+
+\subsection{Pergunta 1}
+\label{chap3:subsec:perg1}
+Esta pergunta tem como seu enunciado "Qual foi a penúltima pessoa que viste?". 
+\subsection{Pergunta 2}
+\label{chap3:subsec:perg2}
+Esta pergunta tem como seu enunciado "Em que tipo de sala estás agora?". 
+\subsection{Pergunta 3}
+\label{chap3:subsec:perg3}
+Esta pergunta tem como seu enunciado "Qual o caminho até à sala de enfermeiros mais próxima?". 
+
+\subsection{Pergunta 4}
+\label{chap3:subsec:perg4}
+Esta pergunta tem como seu enunciado "Qual é a distância até ao médico mais próximo?". 
+
+\subsection{Pergunta 5}
+\label{chap3:subsec:perg5}
+
+\subsection{Pergunta 6}
+\label{chap3:subsec:perg6}
+
+\subsection{Pergunta 7}
+\label{chap3:subsec:perg7}
+
+\subsection{Pergunta 8}
+\label{chap3:subsec:perg8}
+
+\section{Conclusões}
+\label{chap3:sec:concs}
+Ao longo do presente capítulo foram apresentados os passos e os métodos necessários ao desenvolvimento do projeto prático e do funcionamento do mesmo. 
+
+Desta forma, através do conteúdo exposto neste capítulo, encontra-se a apresentação do projeto desenvolvido e o funcionamento do mesmo, mas também a contextualização das ferramentas utilizadas, descritas no capítulo ~\ref{chap:tecno-ferra}.

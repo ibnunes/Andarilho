@@ -1,0 +1,137 @@
+\chapter{Reflexão Crítica e Problemas Encontrados}
+\label{ch::reflexao}
+
+\section{Introdução}
+\label{sec::reflexao:intro}
+
+Neste Capítulo recorre-se à exploração dos seguintes tópicos:
+
+\begin{itemize}
+	\item Objetivos propostos vs. alcançados (Secção \ref{sec::reflexao:objetivos}): compara os objetivos inicialmente propostos com aqueles que foram concluídos no projeto prático;
+	\item Divisão de trabalho pelos elementos do grupo (Secção \ref{sec::reflexao:divisao}): lista as tarefas divididas por cada elemento constituinte.
+	\item Problemas encontrados (Secção \ref{sec::reflexao:problemas}): na sequência da Secção \ref{sec::reflexao:objetivos}, explora os problemas encontrados durante a implementação dos algoritmos;
+	\item Reflexão crítica (Secção \ref{sec::reflexao:critica}): é feita uma \ac{SWOT} em retrospetiva pelo grupo acerca do projeto.
+\end{itemize}
+
+\section{Objetivos Propostos vs. Alcançados}
+\label{sec::reflexao:objetivos}
+
+A Tabela \ref{tab::objetivos} expõe os objetivos propostos inicialmente para o projeto e identifica quais foram alcançados totalmente ou parcialmente, e quais não foram bem sucedidos.
+
+\begin{table}[!htbp]
+	\centering
+	\begin{tabular}{p{.65\textwidth} >{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{.25\textwidth}}
+		\toprule
+		{\bfseries Objetivo proposto} & {\bfseries Alcançado?} \\
+		\midrule
+		Pergunta 1 & $\bullet$             \\
+		Pergunta 2 & $\bullet$             \\
+		Pergunta 3 & $\bullet$             \\
+		Pergunta 4 & $\bullet$             \\
+		Pergunta 5 & $\bullet$             \\
+		Pergunta 6 & $\bullet$             \\
+		Pergunta 7 & $\bullet$             \\
+		Pergunta 8 & $\bullet$             \\
+		Documentação do Código & $\bullet$ \\
+		\bottomrule
+	\end{tabular}
+	\caption[Objetivos propostos vs. alcançados]{
+		Objetivos propostos e respetiva indicação de sucesso.\\
+		\textit{Legenda.} $\bullet$ Totalmente alcançado; $\circ$ Parcialmente alcançado. -- Não alcançado.
+	}
+	\label{tab::objetivos}
+\end{table}
+
+\section{Divisão de Trabalho pelos Elementos do Grupo}
+\label{sec::reflexao:divisao}
+
+Para a gestão e divisão das tarefas que delimitam o projeto, foi realizada uma reunião inicial onde o foco incidiu na definição das metas por cada parte constituinte do grupo de forma balanceada pelos 2 elementos do grupo. A referida gestão, apresenta-se na tabela ~\ref{tab::divisao-trabalho}. A escolha baseia-se no equilíbrio da dificuldade e temas das questões. Apesar da divisão de tarefas, houve uma essencial cooperação entre ambas as partes, para definição e programação das estruturas dos dados que se iriam utilizar e de todas as classes necessárias para consolidação do projeto e também eventualmente para esclarecimento de dúvidas. Isto foi conseguido através de reuniões semanais, com \textit{deadlines} bem definidas para cada tarefa, tendo igualmente sido realizadas algumas reuniões extraordinárias em momentos críticos do desenvolvimento.
+
+\begin{table}[!htbp]
+	\centering
+	\begin{tabular}{l c c c c c}
+		\toprule
+		\textbf{Tarefas} & \textbf{Beatriz Costa} & \textbf{Igor Nunes}\\
+		\midrule
+		Pergunta 1      &   $\bullet$   &               \\
+        Pergunta 2      &               &   $\bullet$   \\
+        Pergunta 3      &   $\bullet$   &               \\
+        Pergunta 4      &               &   $\bullet$   \\
+        Pergunta 5      &   $\bullet$   &               \\
+        Pergunta 6      &               &   $\bullet$   \\
+        Pergunta 7      &   $\bullet$   &               \\
+        Pergunta 8      &               &   $\bullet$   \\
+        Relatório       &   $\bullet$   &   $\bullet$   \\
+        Apresentação    &   $\bullet$   &   $\bullet$   \\
+		\bottomrule
+	\end{tabular}
+	\caption[Distribuição de tarefas]{Distribuição de tarefas pelos elementos do grupo.}
+	\label{tab::divisao-trabalho}
+\end{table}
+
+\section{Problemas Encontrados}
+\label{sec::reflexao:problemas}
+
+A implementação dos diferentes algoritmos necessários para responder às diversas perguntas colocadas levou a que fossem encontrados alguns problemas e contratempos, os quais tiveram de ser ultrapassados a fim de terminar o projeto prático. Os problemas mais notáveis são resumidos na Tabela \ref{tab::problemas}, incluindo as soluções encontradas para os ultrapassar.
+
+\begin{table}[!htbp]
+	\centering
+	\begin{tabular}{p{.56\textwidth} p{.36\textwidth}}
+		\toprule
+		{\bfseries Problema} & {\bfseries Solução} \\
+		\midrule
+		\midrule
+		Ineficiência do algoritmo A* com recurso a uma matriz $800 \times 600$ & Implementação de um grafo no lugar da matriz\\
+		\midrule
+		Perceção da relação entre a bateria, velocidade e tempo & Utilização de funções lineares para a estimação do tempo\\
+		\midrule
+		Localização imprecisa dos objetos & Determinar a direção do \emph{robot} de forma a estimar a localização real do objeto \\
+		\bottomrule
+	\end{tabular}
+	\caption[Problemas encontrados e respetivas soluções]{Problemas encontrados durante o desenvolvimento do projeto e respetivas soluções.}
+	\label{tab::problemas}
+\end{table}
+
+\section{Reflexão Crítica}
+\label{sec::reflexao:critica}
+
+É proposto expor a reflexão crítica face ao trabalho realizado para o desenvolvimento deste projeto através de uma análise \ac{SWOT}.
+
+\subsection{Pontos Fortes}
+\label{ssec::reflexao:critica:fortes}
+
+\begin{enumerate}
+	\item Forte estruturação dos tipos de dados com recurso a classes;
+	\item Utilização dos grafos para aumento da eficiência;
+	\item Implementação de um método altamente eficiente para estimar a duração da bateria e prever a velocidade;
+\end{enumerate}
+
+
+\subsection{Pontos Fracos}
+\label{ssec::reflexao:critica:fracos}
+
+\begin{enumerate}
+	\item O ficheiro de código-fonte final é denso;
+\end{enumerate}
+
+
+\subsection{Ameaças}
+\label{ssec::reflexao:critica:ameacas}
+
+\begin{enumerate}
+	\item Em efeitos de expansão do número de \emph{robots} a circular, as classes com métodos estáticos não permitem a criação de instâncias independentes para cada \emph{robot}, ficando assim um piso limitado apenas a um \emph{robot};
+	\item O uso de grafos não permite obter o caminho exato que o \emph{robot} deve fazer pelo mundo até determinada sala, sendo por conseguinte imprecisa a distância calculada para lá chegar;
+	\item O método de estimação da bateria do \emph{robot} tem imprecisão no retorno de resultados;
+\end{enumerate}
+
+\subsection{Oportunidades}
+\label{ssec::reflexao:critica:oportunidades}
+
+\begin{enumerate}
+	\item Reformular a organização do código de forma a permitir a divisão de ficheiros por classes;
+\end{enumerate}
+
+\section{Conclusões}
+\label{sec::reflexao:conclusao}
+
+Esta fase de reflexão permitiu analisar o trabalho levado ao longo das semanas de planeamento e implementação dos algoritmos. Com esta análise, o grupo pôde tirar conclusões acerca das estratégias utilizadas, as quais serão expostas no Capítulo seguinte.
