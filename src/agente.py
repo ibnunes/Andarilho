@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 agente.py
 
@@ -7,10 +9,15 @@ agente.py
 
 import time
 
+# A biblioteca networkx fornece métodos para trabalhar com grafos
 import networkx as nx
 
 
+# -----------------------------------------------------------------------------
+# CONSTANTES
+# -----------------------------------------------------------------------------
 
+# OBJ_*: Permite identificar os objetos ou pessoas encontrados conforme a nomenclatura fornecida pelo robot
 OBJ_NURSE   = 'enfermeiro'
 OBJ_DOCTOR  = 'medico'
 OBJ_PATIENT = 'doente'
@@ -19,17 +26,21 @@ OBJ_CHAIR   = 'cadeira'
 OBJ_BOOK    = 'livro'
 OBJ_BED     = 'cama'
 
-CATEGORY_OBJECT    = [OBJ_TABLE, OBJ_CHAIR, OBJ_BOOK, OBJ_BED]
-CATEGORY_PEOPLE    = [OBJ_NURSE, OBJ_DOCTOR, OBJ_PATIENT]
-CATEGORY_FURNITURE = [OBJ_BED, OBJ_CHAIR, OBJ_TABLE]
-CATEGORY_ALL       = CATEGORY_PEOPLE + CATEGORY_OBJECT
+#CATEGORY_*: Aglutina objetos em categorias para fácil identificação nos algoritmos correspondentes
+CATEGORY_OBJECT    = [OBJ_TABLE, OBJ_CHAIR, OBJ_BOOK, OBJ_BED]      # Objetos
+CATEGORY_PEOPLE    = [OBJ_NURSE, OBJ_DOCTOR, OBJ_PATIENT]           # Pessoas
+CATEGORY_FURNITURE = [OBJ_BED, OBJ_CHAIR, OBJ_TABLE]                # Mobília
+CATEGORY_ALL       = CATEGORY_PEOPLE + CATEGORY_OBJECT              # Todos
 
+# O separador utilizado pelo robot para distinguir a categoria do nome do objeto
 SEPARATOR = '_'
 
-MAP_MIDPOINT = 'mid'
-MAP_DISTANCE = 'weight'
-MAP_ROBOT    = 'X'
+# MAP_*: nomes para o grafo do mapa
+MAP_MIDPOINT = 'mid'        # Atributo: ponto médio de uma divisão
+MAP_DISTANCE = 'weight'     # Atributo: distância entre dois nodos
+MAP_ROBOT    = 'X'          # Objecto: robot
 
+# ROOM_*: 
 ROOM_UNKNOWN  = 0
 ROOM_CORRIDOR = 1
 ROOM_BEDROOM  = 2
@@ -57,6 +68,10 @@ ERROR_NOT_ENOUGH_PEOPLE = "Não foram encontradas pelo menos 2 pessoas até ao m
 
 INIT_POS = (100, 100)
 
+
+# -----------------------------------------------------------------------------
+# CLASSES
+# -----------------------------------------------------------------------------
 
 class LinearFunction:
     def __init__(self):
@@ -509,6 +524,72 @@ class Hospital:
     
 
     @staticmethod
+    def getProbabilityOfPatientKnowingNurses():
+        total_rooms                    = 0
+        rooms_with_nurses              = 0
+        rooms_with_nurses_and_patients = 0
+
+        for (room, things) in Hospital._floor.nodes(data=True):
+            if room not in range(0, 5):
+                total_rooms += 1
+            if OBJ_NURSE in things:
+                rooms_with_nurses += 1
+                if OBJ_PATIENT in things:
+                    rooms_with_nurses_and_patients += 1
+
+        # Probabilidade de existir doente e enfermeiros numa divisão
+        prob_patient_and_nurse = rooms_with_nurses_and_patients / total_rooms
+
+        # Probabilidade de existir enfermeiros na divisão
+        prob_nurse = rooms_with_nurses / total_rooms
+        
+        return prob_patient_and_nurse / prob_nurse
+    
+
+    @staticmethod
+    def getProbabilityOfBookIfChairFound():
+        total_rooms = 0
+        
+        # Let:
+        #   L = Book
+        #   C = Chair
+        #   X = Bed
+        #   n = NOT
+        # Example: LCnX = Book and Chair and NOT Bed
+
+        rooms_C  = 0
+        rooms_X  = 0
+        rooms_CX = 0
+        rooms_LCX   = 0
+        rooms_LCnX  = 0
+
+        for (room, things) in Hospital._floor.nodes(data=True):
+            if room not in range(0, 5):
+                total_rooms += 1
+            
+            if OBJ_CHAIR in things:
+                rooms_C += 1
+            if OBJ_BED in things:
+                rooms_X += 1
+            
+            if set([OBJ_CHAIR, OBJ_BED]).issubset(set(things)):
+                rooms_CX += 1
+            if set([OBJ_BOOK, OBJ_CHAIR, OBJ_BED]).issubset(set(things)):
+                rooms_LCX += 1
+            elif set([OBJ_BOOK, OBJ_CHAIR]).issubset(set(things)):
+                rooms_LCnX += 1
+
+        prob_X = rooms_X / total_rooms
+        prob_C = rooms_C / total_rooms
+        prob_L_knowing_CX = [rooms_LCX / rooms_CX, rooms_LCnX / rooms_CX]
+
+        prob_sum  = (1 - prob_X) * prob_C * prob_L_knowing_CX[0]
+        prob_sum += prob_X * prob_C * prob_L_knowing_CX[1]
+
+        return prob_sum / prob_C
+
+
+    @staticmethod
     def getTimeToDie():
         return Robot.predictTimeFromBattery(0.0)
 
@@ -559,6 +640,11 @@ class Utils:
         return desc if len(desc) > 0 else "Nenhum caminho foi encontrado."
 
 
+
+# -----------------------------------------------------------------------------
+# FUNÇÃO DE TRABALHO
+# -----------------------------------------------------------------------------
+
 def work(posicao, bateria, objetos):
     # esta função é invocada em cada ciclo de clock
     # e pode servir para armazenar informação recolhida pelo agente
@@ -578,52 +664,65 @@ def work(posicao, bateria, objetos):
     # Log.d("Vm = {0:.3f}; Vl = {1:.3f}; Var = {2 }".format(Robot.getAverageVelocity(), Robot.lastVelocity(), Robot.getVelocityVariance()))
 
 
+
+# -----------------------------------------------------------------------------
+# RESPOSTAS ÀS PERGUNTAS
+# -----------------------------------------------------------------------------
+
 def resp1():
     # Qual foi a penúltima pessoa que viste?
     # Log.d("People: {0}\n Objects: {1}".format(Things.getListOfPeople(), Things.getListOfObjects()))
     # Log.d("Nodes: {0}\nEdges: {1}".format(Hospital.getMapGraph().nodes(data=True), Hospital.getMapGraph().edges(data=True)))
-    print("Resposta: {0}".format(Things.getLastButOnePerson()))
+    print("Resposta: {0}\n".format(Things.getLastButOnePerson()))
 
 
 def resp2():
     # Em que tipo de sala estás agora?
     # Log.d("Nodes: {0}\nEdges: {1}".format(Hospital.getFloorGraph().nodes(data=True), Hospital.getFloorGraph().edges()))
-    print("Resposta: {0}".format(Hospital.roomDescription(Hospital.getCurrentTypeOfRoom())))
+    print("Resposta: {0}\n".format(Hospital.roomDescription(Hospital.getCurrentTypeOfRoom())))
 
 
 def resp3():
     # Qual o caminho para a sala de enfermeiros mais próxima?
-    print("Resposta: {0}".format(Utils.pathDescription(Hospital.getPathToNearestNurseOffice())))
+    print("Resposta: {0}\n".format(Utils.pathDescription(Hospital.getPathToNearestNurseOffice())))
 
 
 def resp4():
     # Qual a distância até ao médico mais próximo?
-    print("Resposta: {0}".format(Hospital.getDistanceToNearestDoctor()))
+    print("Resposta: {0}\n".format(Hospital.getDistanceToNearestDoctor()))
 
 
 def resp5():
     # Quanto tempo achas que demoras a ir de onde estás até às escadas?
     try:
-        print("Resposta: {0}".format(Utils.timeToStr(Hospital.getTimeToStairs())))
+        print("Resposta: {0}\n".format(Utils.timeToStr(Hospital.getTimeToStairs())))
     except:
-        print("Não tenho dados suficientes para saber como me comporto.")
+        print("Não tenho dados suficientes para saber como me comporto.\n")
 
 
 def resp6():
     # Quanto tempo achas que falta até ficares sem bateria?
     try:
-        print("Resposta: {0}".format(Utils.timeToStr(Hospital.getTimeToDie())))
+        print("Resposta: {0}\n".format(Utils.timeToStr(Hospital.getTimeToDie())))
     except: # Exception as e:
-        print("Não tenho dados suficientes para saber quando irei entregar a alma ao meu criador.")
+        print("Não tenho dados suficientes para saber quando irei entregar a alma ao meu criador.\n")
 
 
 def resp7():
     # Qual a probabilidade de encontrar um livro numa divisão se já encontraste uma cadeira?
-    print("Pergunta 7")
-    pass
+    try:
+        print("Resposta: {0:.3f}\n".format(Hospital.getProbabilityOfBookIfChairFound()))
+    except ZeroDivisionError:
+        print("Não me é possível calcular esta probabilidade de momento (divisão por zero)\n")
+    except Exception as e:
+        print("Ocorreu um erro não previsto: {0}\n".format(repr(e)))
 
 
 def resp8():
     # Se encontrares um enfermeiro numa divisão, qual é a probabilidade de estar lá um doente?
-    print("Pergunta 8")
-    pass
+    try:
+        print("Resposta: {0:.3f}\n".format(Hospital.getProbabilityOfPatientKnowingNurses()))
+    except ZeroDivisionError:
+        print("Não me é possível calcular esta probabilidade de momento (divisão por zero)\n")
+    except Exception as e:
+        print("Ocorreu um erro não previsto: {0}\n".format(repr(e)))
