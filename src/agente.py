@@ -44,8 +44,72 @@ ROOM_DESCRIPTION = [
     "Sala de espera"
 ]
 
+DIR_STATIC = 0
+DIR_RIGHT  = 1
+DIR_LEFT   = 2
+DIR_UP     = 3
+DIR_DOWN   = 4
+
+SIZE_OBJECT = 25
+SIZE_WALL   = 15
 
 ERROR_NOT_ENOUGH_PEOPLE = "Não foram encontradas pelo menos 2 pessoas até ao momento"
+
+INIT_POS = (100, 100)
+
+
+class LinearFunction:
+    def __init__(self):
+        self._m = 0.0
+        self._b = 0.0
+        self._p = (0, 0)
+        self._q = (0, 0)
+        self._defined = False
+    
+    def setM(self, m):
+        self._defined = True
+        self._m = m
+    
+    def setB(self, b):
+        self._defined = True
+        self._b = b
+
+    def setFrom2Points(self, p, q):
+        try:
+            m = (p[1] - q[1]) / (p[0] - q[0])
+            b = p[1] - m * p[0]
+            self._p = p
+            self._q = q
+            self.setM(m)
+            self.setB(b)
+        except:
+            self._defined = False
+    
+    def setPointB(self, q):
+        self.setFrom2Points(self._p, q)
+    
+    def getY(self, x):
+        return self._m * x + self._b
+    
+    def getX(self, y):
+        if self._m != 0.0:
+            return (y - self._b) / self._m
+        else:
+            return self._b
+    
+    def getPointA(self):
+        return self._p
+    
+    def getPointB(self):
+        return self._q
+    
+    def isDefined(self):
+        return self._defined
+    
+    def reset(self):
+        self._m = 0.0
+        self._b = 0.0
+        self._defined = False
 
 
 
@@ -96,12 +160,106 @@ class Things:
 
 
 class Robot:
-    _lastPos = (0, 0)
-    _currPos = (0, 0)
+    _lastPos = INIT_POS
+    _currPos = INIT_POS
+
+    _lastBat = 100.0
+    _currBat = 100.0
+
+    _lastTime = time.time()
+    _currTime = time.time()
+    
+    _lastVel = 0.0
+    _currVel = 0.0
+
+    _funVB = LinearFunction()   # Velocity vs Battery
+    _funBT = LinearFunction()   # Battery vs Time
+    _funVT = LinearFunction()   # Velocity vs Time
+
+    @staticmethod
+    def getDirection():
+        x0, y0 = Robot._lastPos[0], Robot._lastPos[1]
+        x1, y1 = Robot._currPos[0], Robot._currPos[1]
+        dx, dy = x1 - x0, y1 - y0
+        
+        if dx == 0 and dy == 0:
+            return [DIR_STATIC]
+        
+        direction = []
+        direction.append(DIR_RIGHT if dx > 0 else DIR_LEFT)
+        direction.append(DIR_DOWN if dy > 0 else DIR_UP)
+        return direction
+    
+
+    @staticmethod
+    def getAdaptedPosition():
+        pos = tuple(Robot._currPos)
+        direction = Robot.getDirection()
+        if DIR_STATIC in direction:
+            return pos
+        pos = (pos[0] + SIZE_OBJECT if DIR_RIGHT in direction else -SIZE_OBJECT, pos[1] + SIZE_OBJECT if DIR_DOWN in direction else -SIZE_OBJECT)
+        return pos
+
+
+    @staticmethod
+    def updateVelocity():
+        if Robot._lastPos != Robot._currPos:
+            Robot._currTime, Robot._lastTime = Utils.swap(Robot._currTime, time.time())
+            Robot._currVel, Robot._lastVel = Utils.swap(Robot._currVel, Utils.distance(Robot._lastPos, Robot._currPos) / (Robot._currTime - Robot._lastTime))
+    
+    @staticmethod
+    def refreshFunctions():
+        if Robot._currBat > Robot._lastBat:
+            Robot._funVB.reset()
+            Robot._funBT.reset()
+            Robot._funVT.reset()
+        else:
+            if not Robot._funVB.isDefined():
+                Robot._funVB.setFrom2Points((Robot._lastBat, Robot._lastVel), (Robot._currBat, Robot._currVel))
+            else:
+                Robot._funVB.setPointB((Robot._currBat, Robot._currVel))
+
+            if not Robot._funBT.isDefined():
+                Robot._funBT.setFrom2Points((Robot._lastTime, Robot._lastBat), (Robot._currTime, Robot._currBat))
+            else:
+                Robot._funBT.setPointB((Robot._currTime, Robot._currBat))
+            
+            if not Robot._funVT.isDefined():
+                Robot._funVT.setFrom2Points((Robot._lastTime, Robot._lastVel), (Robot._currTime, Robot._currVel))
+            else:
+                Robot._funVT.setPointB((Robot._currTime, Robot._currVel))
+
+    
+    @staticmethod
+    def predictTimeFromDistance(distance):
+        if Robot._funVT.isDefined():
+            vf, vi = Robot._funVT.getPointA()[1], Robot._funVT.getPointB()[1]
+            return 2 * distance / (vf + vi)
+        else:
+            raise Exception("Cannot predict time")
+    
+    @staticmethod
+    def predictTimeFromBattery(battery):
+        if Robot._funBT.isDefined():
+            return Robot._funBT.getX(battery) - Robot._funBT.getPointA()[0]
+        else:
+            raise Exception("Cannot predict time")
+
+    @staticmethod
+    def setBattery(battery):
+        Robot._currBat, Robot._lastBat = Utils.swap(Robot._currBat, battery)
 
     @staticmethod
     def setPosition(x, y):
         Robot._currPos, Robot._lastPos = Utils.swap(Robot._currPos, (x, y))
+    
+    @staticmethod
+    def updateRobot(position, battery):
+        assert len(position) == 2
+        Robot.setBattery(battery)
+        Robot.setPosition(position[0], position[1])
+        Robot.updateVelocity()
+        Robot.refreshFunctions()
     
     @staticmethod
     def getPosition():
@@ -243,6 +401,7 @@ class Hospital:
                     return i
             else:
                 return 0
+
     
     @staticmethod
     def updateWithObjects(objects, position):
@@ -254,7 +413,8 @@ class Hospital:
                     try:
                         currentObjects = list(map(lambda n: n[1], Hospital._floor.nodes[Hospital._currentRoom][category]))
                         if name not in currentObjects:
-                            Hospital._floor.nodes[Hospital._currentRoom][category].append((position, name))
+                            # Hospital._floor.nodes[Hospital._currentRoom][category].append((position, name))
+                            Hospital._floor.nodes[Hospital._currentRoom][category].append((Robot.getAdaptedPosition(), name))
                         # Log.d("Current objects of type {0} after append: {1}".format(category, currentObjects))
                     except KeyError:
                         Hospital._floor.nodes[Hospital._currentRoom][category] = [(position, name)]
@@ -335,6 +495,21 @@ class Hospital:
             return result[0][1]
         else:
             return []
+    
+
+    @staticmethod
+    def getTimeToStairs():
+        Hospital.addRobotToMap()
+        # path   = nx.astar_path(Hospital._map, MAP_ROBOT, Hospital.roomToStr(0))
+        weight = nx.astar_path_length(Hospital._map, MAP_ROBOT, Hospital.roomToStr(0))
+        Hospital.removeRobotFromMap()
+        # return (weight, path)
+        return Robot.predictTimeFromDistance(weight)
+    
+
+    @staticmethod
+    def getTimeToDie():
+        return Robot.predictTimeFromBattery(0.0)
 
 
     @staticmethod
@@ -359,6 +534,10 @@ class Utils:
     @staticmethod
     def midpoint(a, b):
         return ((a[0] + a[1]) // 2, (b[0] + b[1]) // 2)
+    
+    @staticmethod
+    def timeToStr(t):
+        return "{0:3d} segundos e {1:3d} milissegundos".format(int(t), int((t - int(t)) * 1000))
 
 
 
@@ -372,12 +551,14 @@ def work(posicao, bateria, objetos):
 
     # podem achar o tempo atual usando, p.ex.
     # time.time()
+    # Log.d("Time: {0}".format(time.time()))
 
-    Robot.setPosition(posicao[0], posicao[1])
+    Robot.updateRobot(posicao, bateria)
 
     Hospital.updateWithPosition(Robot.getPosition())
     Hospital.updateWithObjects(objetos, Robot.getPosition())
     # Log.d("Posicao = [{0}, {1}]; Bateria = {2:.2f}; Objetos = {3}; Sala = {4}".format(pos_x, pos_y, bateria, objetos, Hospital.getRoomIndex()))
+    # Log.d("Vm = {0:.3f}; Vl = {1:.3f}; Var = {2 }".format(Robot.getAverageVelocity(), Robot.lastVelocity(), Robot.getVelocityVariance()))
 
 
 def resp1():
@@ -406,14 +587,18 @@ def resp4():
 
 def resp5():
     # Quanto tempo achas que demoras a ir de onde estás até às escadas?
-    print("Pergunta 5")
-    pass
+    try:
+        print("Resposta: {0}".format(Utils.timeToStr(Hospital.getTimeToStairs())))
+    except:
+        print("Não tenho dados suficientes para saber como me comporto.")
 
 
 def resp6():
     # Quanto tempo achas que falta até ficares sem bateria?
-    print("Pergunta 6")
-    pass
+    try:
+        print("Resposta: {0}".format(Utils.timeToStr(Hospital.getTimeToDie())))
+    except: # Exception as e:
+        print("Não tenho dados suficientes para saber quando irei entregar a alma ao meu criador.")
 
 
 def resp7():
