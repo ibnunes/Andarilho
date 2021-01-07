@@ -12,7 +12,16 @@ Este capítulo explora o percurso realizado aquando do desenvolvimento do projet
 
 Antes da implementação dos algoritmos para satisfazer as respostas às perguntas colocadas, foi necessário definir a estrutura de dados utilizada para a manipulação do mundo virtual e dos objetos nele contidos.
 
-Desta forma, além da escolha do uso de listas para guardar os objetos que o dispositivo robótico encontra no seu mundo virtual, foi utilizada numa primeira abordagem uma matriz $800\times600$ para efeitos de aplicação de um algoritmo de \textit{path-finding} (necessário para as respostas aos enunciados descritos nas subseccções \ref{chap3:subsec:perg3}, \ref{chap3:subsec:perg4} e \ref{chap3:subsec:perg5}). Esta abordagem revelou alguns problemas de eficiência, conforme é refletido na secção \ref{sec::reflexao:problemas}). A solução passou então pela substituição da matriz por uma estrutura de dados que permite representar de forma bastante eficiente os dados recolhidos sobre o mundo virtual: grafos. Para este fim, foi utilizada a biblioteca \emph{NetworkX} \cite{NetworkX} para a criação e gestão dos mesmos. Dois grafos foram utilizados neste âmbito:
+Desta forma, além da escolha do uso de listas para guardar os objetos que o dispositivo robótico encontra no seu mundo virtual (Figura \ref{fig::hospital}), foi utilizada numa primeira abordagem uma matriz $800\times600$ para efeitos de aplicação de um algoritmo de \textit{path-finding} (necessário para as respostas aos enunciados descritos nas subseccções \ref{ssec::implement:details:perg3}, \ref{ssec::implement:details:perg4} e \ref{ssec::implement:details:perg5}). Esta abordagem revelou alguns problemas de eficiência, conforme é refletido na secção \ref{sec::reflexao:problemas}).
+
+\begin{figure}[!hbtp]
+    \centering
+    \includegraphics[scale=0.5]{hospital}
+    \caption[Mundo utilizado para implementação do projeto]{Mundo virtual original utilizado para a implementação do projeto.}
+    \label{fig::hospital}
+\end{figure}
+
+A solução passou então pela substituição da matriz por uma estrutura de dados que permite representar de forma bastante eficiente os dados recolhidos sobre o mundo virtual: grafos. Para este fim, foi utilizada a biblioteca \emph{NetworkX} \cite{NetworkX} para a criação e gestão dos mesmos. Dois grafos foram utilizados neste âmbito:
 
 \begin{enumerate}
 	\item Grafo \emph{floor} (Figura \ref{fig::grafo_floor}) --- armazena informações sobre as salas visitadas, a sua ligação e os objetos nelas contidos;
@@ -23,8 +32,8 @@ Desta forma, além da escolha do uso de listas para guardar os objetos que o dis
 \begin{figure}[!htb]
 	% TODO: Pôr imagem do grafo floor
 	\centering
-	%\includegraphics[width=\textwidth]{}
-	\caption{}{}
+	\includegraphics[width=\textwidth]{floor}
+	\caption[Grafo \textit{floor}]{Grafo \textit{floor}: cada nodo representa uma divisão visitada pelo \textit{robot} e cada aresta indica que existe uma porta entre os nodos que ela conecta.\\ Este grafo representa o mapa total original fornecido para o projeto.}
 	\label{fig::grafo_floor}
 \end{figure}
 
@@ -33,8 +42,8 @@ Por análise do grafo da Figura \ref{fig::grafo_floor}, podemos constatar que se
 \begin{figure}[!htb]
 	% TODO: Pôr imagem do grafo map
 	\centering
-	%\includegraphics[width=\textwidth]{}
-	\caption{}{}
+	\includegraphics[width=\textwidth]{map}
+	\caption[Grafo \textit{map}]{Grafo \textit{map}: cada nodo representa uma divisão visitada pelo \textit{robot} (codificado com \texttt{R}) e uma porta que conecta duas divisões (codificado com \texttt{D}).\\ As ligações diretas entre portas permitem determinar caminhos mais curtos sem passar pelo ponto médio de cada divisão.\\ Este grafo representa o mapa total original fornecido para o projeto.}
 	\label{fig::grafo_map}
 \end{figure}
 
@@ -157,7 +166,7 @@ A distância é, portanto, a área sob a curva da função $v(t)$ (velocidade em
 \begin{figure}[!hbtp]
     \centering
     \includegraphics[scale=0.5]{fun-vt}
-    \caption{Estimativa da velocidade do \textit{robot}: função $v(t)$}{Estimativa da velocidade do \textit{robot}: função $v(t)$.}
+    \caption[Estimativa da velocidade do \textit{robot}: função $v(t)$]{Estimativa da velocidade do \textit{robot}: função $v(t)$.}
     \label{fig::fun_vt}
 \end{figure}
 
@@ -180,7 +189,7 @@ O tempo determinado é formatado pela função \texttt{timeToStr()} da classe \t
 
 À semelhança da questão 5 (secção \ref{ssec::implement:details:perg5}), a classe \textit{Robot} avalia a variação da bateria ao longo do tempo com uma função linear.
 
-O método \texttt{getTimeToDie()} da classe \textit{Hospital} encapsula o método \texttt{predictTimeFromBattery()} da classe \textit{Robot}, pedindo o tempo que falta até a bateria chegar a \SI{0}{\percent}.
+O método \texttt{getTimeToDie()} da classe \textit{Hospital}, utilizada para responder a esta pergunta, encapsula o método \texttt{predictTimeFromBattery()} da classe \textit{Robot}, pedindo o tempo que falta até a bateria chegar a \SI{0}{\percent}.
 
 Novamente, o método \texttt{timeToStr()} da classe \textit{Utils} é utilizado para converter o número obtido em segundos e milissegundos.
 
@@ -201,12 +210,12 @@ Tal significa que os eventos \textbf{não são independentes}, o que invalida po
 \begin{figure}[!htbp]
     \centering
     \includegraphics[scale=0.6]{bayes}
-    \caption{Estimativa da velocidade do \textit{robot}: função $v(t)$}{Estimativa da velocidade do \textit{robot}: função $v(t)$.}
+    \caption[Rede \textit{Bayesiana} para a pergunta 7]{Rede \textit{Bayesiana} que correlaciona os seguintes eventos: sala conter camas, sala conter cadeiras e sala conter livros.}
     \label{fig::bayes}
 \end{figure}
 
 Seja então:
-\begin{itemize}
+\begin{itemize}[nosep]
     \item $L$: Livro
     \item $C$: Cadeira
     \item $X$: Cama
@@ -259,12 +268,12 @@ O método \texttt{getProbabilityOfPatientKnowingNurses()} da classe \textit{Hosp
 \end{equation}
 
 Onde:
-\begin{itemize}
+\begin{itemize}[nosep]
     \item $P(D)$: probabilidade de um doente estar numa sala;
     \item $P(E)$: probabilidade de um enfermeiro estar numa sala.
 \end{itemize}
 
-Tendo em conta que, por exemplo, $P(E) = (\mathrm{salas~com~enfermeiros}) / (\mathrm{total~salas})$, o cálculo destas probabilidades é direto, sendo por fim retornado o resultado da divisão da equação (\ref{eq::prob_de}).
+Tendo em conta que, por exemplo, $P(E) = (\mathrm{salas~com~E}) / (\mathrm{total~salas})$, o cálculo destas probabilidades é direto, sendo por fim retornado o resultado da divisão da equação (\ref{eq::prob_de}).
 
 
 
