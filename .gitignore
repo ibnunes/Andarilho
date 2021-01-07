@@ -133,4 +133,4 @@ doc/*.lot
 doc/*.out
 doc/*.synctex.gz
 doc/*.toc
-*.lot
+doc/_minted*

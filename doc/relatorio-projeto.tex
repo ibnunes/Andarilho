@@ -37,6 +37,7 @@
 \usepackage{color}
 \usepackage{colortbl}
 % \usepackage{biblatex}
+\usepackage{siunitx}
 
 % \renewcommand{\ttdefault}{phv}
 
@@ -87,16 +88,12 @@
 \graphicspath{{./img/}}
 \newcommand{\usecasescale}{0.5}
 
-\newcommand{\famousquote}[2]{
+\newcommand{\enunciado}[1]{
 	\begin{quote}
-		\rule{\textwidth-2\leftmargin}{0.4pt}
-		{\itshape #1}
+		%\rule{\textwidth-2\leftmargin}{0.4pt}
+		{\bfseries Enunciado:}~{\itshape #1}\\
 		\vspace{-12pt}
-		\begin{flushright}
-			\textasciitilde~#2
-		\end{flushright}
-		\vspace{-20pt}
-		\rule{\textwidth-2\leftmargin}{0.4pt}
+		%\rule{\textwidth-2\leftmargin}{0.4pt}
 	\end{quote}
 }
 
@@ -111,7 +108,7 @@
 
 \frontmatter
 
-\include{resumo}
+%\include{resumo}
 
 %\clearpage{\thispagestyle{empty}\cleardoublepage}
 
@@ -128,8 +125,8 @@
 
 % Se existirem trechos de código, descomentar as seguintes linhas
 % \clearpage{\thispagestyle{empty}\cleardoublepage}
-\listoflistings
-\addcontentsline{toc}{chapter}{\listoflistingscaption}
+%\listoflistings
+%\addcontentsline{toc}{chapter}{\listoflistingscaption}
 
 %\clearpage{\thispagestyle{empty}\cleardoublepage}
 \include{acronimos}

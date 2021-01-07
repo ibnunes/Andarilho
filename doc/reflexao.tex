@@ -1,8 +1,6 @@
 \chapter{Reflexão Crítica e Problemas Encontrados}
 \label{ch::reflexao}
 
-% TODO: Rever capítulo
-
 \section{Introdução}
 \label{sec::reflexao:intro}
 
@@ -49,14 +47,20 @@ A Tabela \ref{tab::objetivos} expõe os objetivos propostos inicialmente para o 
 \end{table}
 
 
-\section{Divisão de Trabalho pelos Elementos do Grupo}
+\section{Divisão de Tarefas}
 \label{sec::reflexao:divisao}
 
-Para a gestão e divisão das tarefas que delimitam o projeto, foi realizada uma reunião inicial onde o foco incidiu na definição das metas por cada parte constituinte do grupo de forma balanceada pelos 2 elementos do grupo. A referida gestão, apresenta-se na tabela ~\ref{tab::divisao-trabalho}. A escolha baseia-se no equilíbrio da dificuldade e temas das questões. Apesar da divisão de tarefas, houve uma essencial cooperação entre ambas as partes, para definição e programação das estruturas dos dados que se iriam utilizar e de todas as classes necessárias para consolidação do projeto e também eventualmente para esclarecimento de dúvidas. Isto foi conseguido através de reuniões semanais, com \textit{deadlines} bem definidas para cada tarefa, tendo igualmente sido realizadas algumas reuniões extraordinárias em momentos críticos do desenvolvimento.
+Para a gestão e divisão das tarefas que delineiam o projeto, foi realizada uma reunião inicial onde o foco incidiu na definição das metas por cada membro do grupo de forma balanceada. A referida gestão é apresentada na tabela ~\ref{tab::divisao-trabalho}. A escolha baseou-se no equilíbrio da dificuldade e temas das questões.
+
+Não obstante, apesar da divisão de tarefas, houve uma essencial cooperação inicial entre os membros para definição das estruturas de dados e classes que se consideraram necessárias para a consolidação do projeto. Naturalmente houve de igual forma colaboração pontual no esclarecimento de dúvidas entre os membros.
+
+A concretização do projeto foi conseguida com a realização de reuniões semanais, com \textit{deadlines} bem definidas para cada tarefa, tendo igualmente sido realizadas algumas reuniões extraordinárias em momentos críticos do desenvolvimento.
+
+Por fim, o relatório e a apresentação foram divididos pelas diferentes partes que cada membro implementou, assim como pelos restantes Capítulos adicionais. A revisão final do relatório foi, contudo, conjunta a fim de garantir a sua coerência.
 
 \begin{table}[!htbp]
 	\centering
-	\begin{tabular}{l c c c c c}
+	\begin{tabular}{l c c}
 		\toprule
 		\textbf{Tarefas} & \textbf{Beatriz Costa} & \textbf{Igor Nunes}\\
 		\midrule
@@ -80,7 +84,7 @@ Para a gestão e divisão das tarefas que delimitam o projeto, foi realizada uma
 \section{Problemas Encontrados}
 \label{sec::reflexao:problemas}
 
-A implementação dos diferentes algoritmos necessários para responder às diversas perguntas colocadas levou a que fossem encontrados alguns problemas e contratempos, os quais tiveram de ser ultrapassados a fim de terminar o projeto prático. Os problemas mais notáveis são resumidos na Tabela \ref{tab::problemas}, incluindo as soluções encontradas para os ultrapassar.
+A implementação dos diferentes algoritmos necessários para responder às diversas perguntas colocadas levou a que fossem encontrados alguns problemas, os quais tiveram de ser ultrapassados a fim de terminar o projeto prático. Os problemas mais notáveis são resumidos na Tabela \ref{tab::problemas}, incluindo as soluções encontradas para os ultrapassar.
 
 \begin{table}[!htbp]
 	\centering
@@ -89,9 +93,9 @@ A implementação dos diferentes algoritmos necessários para responder às dive
 		{\bfseries Problema} & {\bfseries Solução} \\
 		\midrule
 		\midrule
-		Ineficiência do algoritmo A* com recurso a uma matriz $800 \times 600$ & Implementação de um grafo no lugar da matriz\\
+		Ineficiência do algoritmo A* com recurso a uma matriz $800 \times 600$ & Implementação de dois grafos no lugar da matriz \\
 		\midrule
-		Perceção da relação entre a bateria, velocidade e tempo & Utilização de funções lineares para a estimação do tempo\\
+		Determinação da relação entre a bateria, velocidade e tempo & Utilização de funções lineares para as respetivas estimativas \\
 		\midrule
 		Localização imprecisa dos objetos & Determinar a direção do \emph{robot} de forma a estimar a localização real do objeto \\
 		\bottomrule
@@ -99,6 +103,9 @@ A implementação dos diferentes algoritmos necessários para responder às dive
 	\caption[Problemas encontrados e respetivas soluções]{Problemas encontrados durante o desenvolvimento do projeto e respetivas soluções.}
 	\label{tab::problemas}
 \end{table}
+
+De notar que, já na fase final do projeto, percebemos que existe a possibilidade de as relações entre a bateria e a velocidade com o tempo serem funções exponenciais. A sua implementação não seria complexa uma vez que a derivada e a primitiva de uma função exponencial do tipo $ke^x$ é a própria função exponencial (propriedade importante para a pergunta 5 (secção \ref{ssec::implement:details:perg5})):
+
 
 
 \section{Reflexão Crítica}
@@ -113,9 +120,9 @@ A implementação dos diferentes algoritmos necessários para responder às dive
 \begin{enumerate}
 	\item Forte estruturação dos tipos de dados com recurso a classes;
 	
-	\item Utilização dos grafos para aumento da eficiência;
+	\item Utilização dos grafos para aumento significativo da eficiência;
 	
-	\item Implementação de um método altamente eficiente para estimar a duração da bateria e prever a velocidade;
+	\item Implementação de um método altamente eficiente para estimar a duração da bateria e prever a velocidade.
 \end{enumerate}
 
 
@@ -123,7 +130,11 @@ A implementação dos diferentes algoritmos necessários para responder às dive
 \label{ssec::reflexao:critica:fracos}
 
 \begin{enumerate}
-	\item O ficheiro de código-fonte final é denso;
+	\item O código-fonte final, incluindo documentação, é denso e de difícil navegação;
+    
+    \item As funções lineares que relacionam a bateria e a velocidade com o tempo não representam fielmente a variação que ocorre ao longo do tempo;
+    
+    \item Várias funções não foram otimizadas a fim de melhorar o consumo de recursos e/ou de aumentar a eficiência temporal.
 \end{enumerate}
 
 
@@ -135,7 +146,7 @@ A implementação dos diferentes algoritmos necessários para responder às dive
 	
 	\item O uso de grafos não permite obter o caminho exato que o \emph{robot} deve fazer pelo mundo até determinada sala, sendo por conseguinte imprecisa a distância calculada para lá chegar;
 	
-	\item O método de estimação da bateria do \emph{robot} tem imprecisão no retorno de resultados;
+	\item O método de estimação da bateria do \emph{robot} é impreciso uma vez que o comportamento real destas funções não se revela linear.
 \end{enumerate}
 
 
@@ -144,6 +155,10 @@ A implementação dos diferentes algoritmos necessários para responder às dive
 
 \begin{enumerate}
 	\item Reformular a organização do código de forma a permitir a divisão de ficheiros por classes;
+    
+    \item Estudar melhor a variação da bateria e da velocidade em relação ao tempo a fim de auferir se se tratam de funções exponenciais;
+    
+    \item Estudar os melhores métodos de otimização de cada função a fim de evitar processos potencialmente redundantes.
 \end{enumerate}
 
 
