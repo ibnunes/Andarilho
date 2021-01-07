@@ -1,17 +1,23 @@
 \chapter{Reflexão Crítica e Problemas Encontrados}
 \label{ch::reflexao}
 
+% TODO: Rever capítulo
+
 \section{Introdução}
 \label{sec::reflexao:intro}
 
-Neste Capítulo recorre-se à exploração dos seguintes tópicos:
+Neste Capítulo são explorados os seguintes tópicos:
 
 \begin{itemize}
 	\item Objetivos propostos vs. alcançados (Secção \ref{sec::reflexao:objetivos}): compara os objetivos inicialmente propostos com aqueles que foram concluídos no projeto prático;
+	
 	\item Divisão de trabalho pelos elementos do grupo (Secção \ref{sec::reflexao:divisao}): lista as tarefas divididas por cada elemento constituinte.
+	
 	\item Problemas encontrados (Secção \ref{sec::reflexao:problemas}): na sequência da Secção \ref{sec::reflexao:objetivos}, explora os problemas encontrados durante a implementação dos algoritmos;
+	
 	\item Reflexão crítica (Secção \ref{sec::reflexao:critica}): é feita uma \ac{SWOT} em retrospetiva pelo grupo acerca do projeto.
 \end{itemize}
+
 
 \section{Objetivos Propostos vs. Alcançados}
 \label{sec::reflexao:objetivos}
@@ -20,7 +26,7 @@ A Tabela \ref{tab::objetivos} expõe os objetivos propostos inicialmente para o 
 
 \begin{table}[!htbp]
 	\centering
-	\begin{tabular}{p{.65\textwidth} >{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{.25\textwidth}}
+	\begin{tabular}{p{.35\textwidth} >{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{.25\textwidth}}
 		\toprule
 		{\bfseries Objetivo proposto} & {\bfseries Alcançado?} \\
 		\midrule
@@ -32,7 +38,7 @@ A Tabela \ref{tab::objetivos} expõe os objetivos propostos inicialmente para o 
 		Pergunta 6 & $\bullet$             \\
 		Pergunta 7 & $\bullet$             \\
 		Pergunta 8 & $\bullet$             \\
-		Documentação do Código & $\bullet$ \\
+		Documentação do código & $\bullet$ \\
 		\bottomrule
 	\end{tabular}
 	\caption[Objetivos propostos vs. alcançados]{
@@ -41,6 +47,7 @@ A Tabela \ref{tab::objetivos} expõe os objetivos propostos inicialmente para o 
 	}
 	\label{tab::objetivos}
 \end{table}
+
 
 \section{Divisão de Trabalho pelos Elementos do Grupo}
 \label{sec::reflexao:divisao}
@@ -69,6 +76,7 @@ Para a gestão e divisão das tarefas que delimitam o projeto, foi realizada uma
 	\label{tab::divisao-trabalho}
 \end{table}
 
+
 \section{Problemas Encontrados}
 \label{sec::reflexao:problemas}
 
@@ -76,7 +84,7 @@ A implementação dos diferentes algoritmos necessários para responder às dive
 
 \begin{table}[!htbp]
 	\centering
-	\begin{tabular}{p{.56\textwidth} p{.36\textwidth}}
+	\begin{tabular}{p{.46\textwidth} p{.46\textwidth}}
 		\toprule
 		{\bfseries Problema} & {\bfseries Solução} \\
 		\midrule
@@ -92,17 +100,21 @@ A implementação dos diferentes algoritmos necessários para responder às dive
 	\label{tab::problemas}
 \end{table}
 
+
 \section{Reflexão Crítica}
 \label{sec::reflexao:critica}
 
 É proposto expor a reflexão crítica face ao trabalho realizado para o desenvolvimento deste projeto através de uma análise \ac{SWOT}.
+
 
 \subsection{Pontos Fortes}
 \label{ssec::reflexao:critica:fortes}
 
 \begin{enumerate}
 	\item Forte estruturação dos tipos de dados com recurso a classes;
+	
 	\item Utilização dos grafos para aumento da eficiência;
+	
 	\item Implementação de um método altamente eficiente para estimar a duração da bateria e prever a velocidade;
 \end{enumerate}
 
@@ -120,9 +132,12 @@ A implementação dos diferentes algoritmos necessários para responder às dive
 
 \begin{enumerate}
 	\item Em efeitos de expansão do número de \emph{robots} a circular, as classes com métodos estáticos não permitem a criação de instâncias independentes para cada \emph{robot}, ficando assim um piso limitado apenas a um \emph{robot};
+	
 	\item O uso de grafos não permite obter o caminho exato que o \emph{robot} deve fazer pelo mundo até determinada sala, sendo por conseguinte imprecisa a distância calculada para lá chegar;
+	
 	\item O método de estimação da bateria do \emph{robot} tem imprecisão no retorno de resultados;
 \end{enumerate}
+
 
 \subsection{Oportunidades}
 \label{ssec::reflexao:critica:oportunidades}
@@ -130,6 +145,7 @@ A implementação dos diferentes algoritmos necessários para responder às dive
 \begin{enumerate}
 	\item Reformular a organização do código de forma a permitir a divisão de ficheiros por classes;
 \end{enumerate}
+
 
 \section{Conclusões}
 \label{sec::reflexao:conclusao}
